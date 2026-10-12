@@ -38,6 +38,7 @@ $('#app').innerHTML = `
       <p>해, 달, 다섯 봉우리 그리고 대취타</p>
       <button class="opening-start" id="opening-start"><span aria-hidden="true">▶</span> 시작하기</button>
       <a class="opening-contact" href="https://litt.ly/kikeunssam" target="_blank" rel="noopener noreferrer">개발자 문의 ↗</a>
+      ${mobileDevice ? '' : '<a class="opening-contact opening-worksheet" href="/worksheets/ilwolobong-daechwita.pdf" download="일월오봉_대취타_학습지.pdf">학습지 다운로드 ↓</a>'}
     </div>
     <div class="opening-bottom"><span>© 2026 키큰쌤. All rights reserved.</span></div>
   </section>

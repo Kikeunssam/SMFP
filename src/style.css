@@ -148,3 +148,9 @@ body:has(.opening-screen:not([hidden])){overflow:hidden;height:100dvh}
   dialog{max-width:calc(100vw - 28px);padding:24px 18px}
   dialog p,dialog li{line-height:1.9}
 }
+
+/* Desktop worksheet download shares the contact button's palette and focus style. */
+.opening-contact.opening-worksheet{top:calc(clamp(250px,43vh,420px) + 128px)}
+.mobile-device .opening-worksheet{display:none}
+@media(max-width:700px){.opening-contact.opening-worksheet{top:calc(36vh + 123px)}}
+@media(max-width:440px){.opening-contact.opening-worksheet{top:calc(34vh + 123px)}}
