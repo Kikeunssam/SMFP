@@ -106,3 +106,4 @@ body:has(.opening-screen:not([hidden])){overflow:hidden;height:100dvh}
 .header-actions{display:flex;align-items:center;gap:8px}
 .header-link{color:var(--cream)}
 @media(max-width:570px){.header-actions{gap:4px}.masthead .text-button{font-size:8px;padding:5px 6px}.masthead .text-button span{margin-left:3px}.brand{font-size:24px}}
+.record-status[hidden]{display:none}

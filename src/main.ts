@@ -62,11 +62,10 @@ $('#app').innerHTML = `
           <button class="preset" data-preset="highTide"><span class="preset-icon blue">≋</span><span>축제 행렬<small>신나고 흥겹게</small></span><span class="preset-arrow">↗</span></button>
           <button class="preset custom-preset" data-preset="custom"><span class="preset-icon">＋</span><span>내맘대로<small>빈 장단부터 시작</small></span></button>
         </div>
-        <div class="energy"><div><span>풍경의 신나는 힘</span><strong id="energy-value">0%</strong></div><div class="energy-meter" aria-hidden="true">${Array.from({ length: 20 }, () => '<i></i>').join('')}</div></div>
       </aside>
     </section>
     <section class="instrument" aria-label="장단 만들기">
-      <div class="transport-bar"><div class="transport-buttons"><button id="play" class="play" aria-label="장단 재생"><span id="play-icon">▶</span><span id="play-text">재생</span></button><button id="stop" class="stop" aria-label="멈추고 처음으로">■</button><button id="record" class="record-button" aria-label="풍경과 음악 MP4 녹화"><span aria-hidden="true">●</span> 녹화</button></div><div class="record-status"><span id="record-time" role="status">MP4 · 풍경과 음악</span><a id="record-download" hidden>다시 저장 ↓</a></div>
+      <div class="transport-bar"><div class="transport-buttons"><button id="play" class="play" aria-label="장단 재생"><span id="play-icon">▶</span><span id="play-text">재생</span></button><button id="stop" class="stop" aria-label="멈추고 처음으로">■</button><button id="record" class="record-button" aria-label="풍경과 음악 MP4 녹화"><span aria-hidden="true">●</span> 녹화</button></div><div class="record-status" id="record-status" hidden><span id="record-time" role="status"></span><a id="record-download" hidden>다시 저장 ↓</a></div>
         <div class="tempo-block"><label class="tempo"><span>빠르기</span><input id="bpm" type="number" min="70" max="150" step="1" value="${store.pattern.bpm}" aria-label="빠르기, 분당 박 수"><span class="tempo-rule"></span><input id="tempo-range" type="range" min="70" max="150" value="${store.pattern.bpm}" aria-label="빠르기 조절"></label><span class="tempo-hint">한 칸 = 한 박 · Shift + 클릭: 세게 · 숫자 1–7: 소리 듣기</span></div>
         <div class="transport-right"><span id="position" class="position">01 <span>/ 12</span></span><label class="length-label">박 수<select id="length" aria-label="반복할 박 수"><option value="6">6박</option><option value="8">8박</option><option value="12" selected>12박</option></select></label><button id="clear" class="text-button">비우기</button><button id="undo" class="text-button" hidden>되돌리기</button></div>
       </div>
@@ -76,7 +75,7 @@ $('#app').innerHTML = `
         <div class="phrase-palette" role="group" aria-label="가락 고르기">${Object.entries(melodyPhrases).map(([id, p]) => `<button data-phrase="${id}" aria-pressed="${id === 'a'}" style="--phrase-color:${p.color}">${p.name}<small>${p.duration.toFixed(1)}초</small></button>`).join('')}<button data-phrase="rest" aria-pressed="false">쉼<small>한 바퀴</small></button><button id="phrase-preview">고른 가락 듣기 ▶</button></div>
         <div id="melody-slots" class="melody-slots" role="group" aria-label="가락 순서">${[0,1,2].map(i => `<button data-melody-slot="${i}"></button>`).join('')}</div>
         <p>가락 고르기 → 아래 자리에 놓기 · 가락은 원래 속도로 이어지고 다음 첫 박에 교대해요. 남는 박은 쉬어요.</p>
-      </section><div class="instrument-bottom"><span id="save-state">내 기기에 저장했어요 <i class="save-dot"></i></span></div>
+      </section>
     </section>
     <footer class="credits"><span>© 2026 키큰쌤. All rights reserved.</span><p>악기 샘플은 국립국악원 '국악 디지털 음원' 자료를, 출정 음성은 제공된 녹음을 활용하였습니다.</p></footer>
   </main>
@@ -164,15 +163,15 @@ function sync() {
   audio.updateMix(pattern);
   if (!audible(pattern, 'taepyeongso')) window.dispatchEvent(new Event('smfp:melody-stop'));
   updateEnergy();
-  $('#save-state').innerHTML = store.saveAvailable ? '내 기기에 저장했어요 <i class="save-dot"></i>' : '이 기기에서는 저장할 수 없어요';
   setStep(activeStep);
 }
 function updateEnergy() {
   const intensity = calculateIntensity(store.pattern);
   landscape.intensityTarget = transport.playing ? intensity : 0;
-  $('#energy-value').textContent = `${Math.round(intensity * 100)}%`;
-  document.querySelectorAll('.energy-meter i').forEach((el, i) => el.classList.toggle('lit', i < intensity * 20));
-
+}
+function setRecordMessage(message: string) {
+  $('#record-status').hidden = message.length === 0;
+  $('#record-time').textContent = message;
 }
 function setStep(step: number) {
   activeStep = step;
@@ -207,7 +206,7 @@ async function play() {
   }
 }
 function updateTransport() {
-  if (recorder.active && !transport.playing) { recorder.stop(); $('#record-time').textContent = 'MP4 저장 중…'; setRecordingControls(true); }
+  if (recorder.active && !transport.playing) { recorder.stop(); setRecordMessage('MP4 저장 중…'); setRecordingControls(true); }
   $('#play-icon').textContent = transport.playing ? 'Ⅱ' : '▶';
   $('#play-text').textContent = transport.playing ? '일시정지' : transport.paused ? '이어서 재생' : '재생';
   $('#play').setAttribute('aria-label', transport.playing ? '장단 일시정지' : transport.paused ? '장단 이어서 재생' : '장단 재생');
@@ -259,11 +258,11 @@ function setRecordingControls(locked: boolean) {
 }
 recorder.onTime = seconds => {
   const minutes = Math.floor(seconds / 60), rest = Math.floor(seconds % 60);
-  $('#record-time').textContent = `● ${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')} / ${recordingBeats(store.pattern.length)}박`;
+  setRecordMessage(`● ${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')} / ${recordingBeats(store.pattern.length)}박`);
 };
 recorder.onSaved = (url, filename) => {
   setRecordingControls(false);
-  $('#record-time').textContent = 'MP4 저장 완료';
+  setRecordMessage('MP4 저장 완료');
   const link = $<HTMLAnchorElement>('#record-download'); link.href = url; link.download = filename; link.hidden = false;
   toast('풍경과 음악을 MP4로 저장했어요.');
 };
@@ -273,7 +272,7 @@ $('#record').addEventListener('click', async () => {
   if (recordingStarting || recorder.saving) return;
   if (!PerformanceRecorder.mimeType()) { toast('이 브라우저는 MP4 녹화를 지원하지 않아요. 최신 Chrome 또는 Safari에서 열어 주세요.'); return; }
   recordingStarting = true; setRecordingControls(true);
-  $('#record-time').textContent = '녹화 준비 중…';
+  setRecordMessage('녹화 준비 중…');
   try {
     transport.stop();
     await audio.unlock();
@@ -286,7 +285,7 @@ $('#record').addEventListener('click', async () => {
   } catch (error) {
     recorder.stop();
     toast(error instanceof Error ? error.message : '녹화를 시작하지 못했어요.');
-    $('#record-time').textContent = '녹화 준비 실패';
+    setRecordMessage('녹화 준비 실패');
   } finally { recordingStarting = false; setRecordingControls(recorder.active || recorder.saving); }
 });
 $('#play').addEventListener('click', () => void play());
