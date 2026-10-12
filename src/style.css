@@ -38,9 +38,7 @@ footer.credits{display:flex;flex-wrap:wrap;align-items:center;justify-content:sp
 .brand-copy{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .brand-title{line-height:1}
 .brand-sub{margin:0;color:#fff;font-size:12px;font-weight:normal;line-height:1.25;letter-spacing:.3px;text-shadow:1px 1px #07142f}
-.scene-top{height:36px;font-size:13px}
-@media(max-width:1100px){.scene-top{font-size:11px}}
-@media(max-width:570px){.brand{gap:8px}.brand-sub{font-size:9px;letter-spacing:0}.scene-top{height:31px;font-size:9px}.scene-top>span:last-child{font-size:9px}}
+@media(max-width:570px){.brand{gap:8px}.brand-sub{font-size:9px;letter-spacing:0}}
 
 /* Palace opening: original title with a musician-free background. */
 .shell{visibility:hidden}

@@ -46,28 +46,27 @@ $('#app').innerHTML = `
     <section class="section-heading"><div class="palace-picker"><span class="palace-label">어느 궁궐에서 연주할까?</span><div class="palace-options" role="group" aria-label="궁궐별 일월오봉도 선택">${Object.values(palaceThemes).map(theme => `<button class="palace-option" data-palace="${theme.id}" aria-pressed="${theme.id === selectedPalace}" style="--palace-accent:${theme.accent}"><span class="palace-chip" aria-hidden="true"></span><span>${theme.palace}<small>${theme.hall}</small></span></button>`).join('')}</div></div></section>
     <section class="performance" aria-label="소리에 반응하는 일월오봉도">
       <div class="scene-frame">
-        <div class="scene-top"><span><span class="scene-dot"></span> 대취타 소리 따라 살아나는 일월오봉도</span></div>
         <div id="landscape" role="group" aria-label="해와 달, 다섯 봉우리, 소나무, 폭포와 파도가 있는 픽셀 풍경. 폭포를 누르면 장구를 들어요.">
           <button class="waterfall-hit waterfall-left" aria-label="왼쪽 폭포, 장구 소리 듣기" title="눌러서 장구 소리 듣기"></button>
           <button class="waterfall-hit waterfall-right" aria-label="오른쪽 폭포, 장구 소리 듣기" title="눌러서 장구 소리 듣기"></button>
         </div>
       </div>
-      <aside class="session-panel"><div class="panel-label">하나 · 분위기 고르기</div><h2>오늘은 어떤<br>리듬으로 놀까?</h2><p>마음에 드는 리듬을 고르고<br>자유롭게 바꿔 보세요.</p>
-        <div class="presets" aria-label="시작 리듬">
+      <aside class="session-panel"><div class="panel-label">하나 · 분위기 고르기</div><h2>오늘은 어떤<br>장단으로 놀까?</h2><p>마음에 드는 장단을 고르고<br>자유롭게 바꿔 보세요.</p>
+        <div class="presets" aria-label="시작 장단">
           <button class="preset selected" data-preset="procession"><span class="preset-icon coral">▥</span><span>왕의 행차<small>힘차고 위엄 있게</small></span><span class="preset-arrow">↗</span></button>
           <button class="preset" data-preset="moonrise"><span class="preset-icon sage">◒</span><span>달빛 연회<small>느긋하고 부드럽게</small></span><span class="preset-arrow">↗</span></button>
           <button class="preset" data-preset="highTide"><span class="preset-icon blue">≋</span><span>축제 행렬<small>신나고 흥겹게</small></span><span class="preset-arrow">↗</span></button>
-          <button class="preset custom-preset" data-preset="custom"><span class="preset-icon">＋</span><span>내맘대로<small>빈 리듬부터 시작</small></span></button>
+          <button class="preset custom-preset" data-preset="custom"><span class="preset-icon">＋</span><span>내맘대로<small>빈 장단부터 시작</small></span></button>
         </div>
         <div class="energy"><div><span>풍경의 신나는 힘</span><strong id="energy-value">0%</strong></div><div class="energy-meter" aria-hidden="true">${Array.from({ length: 20 }, () => '<i></i>').join('')}</div></div>
       </aside>
     </section>
-    <section class="instrument" aria-label="리듬 만들기">
-      <div class="transport-bar"><div class="transport-buttons"><button id="play" class="play" aria-label="리듬 재생"><span id="play-icon">▶</span><span id="play-text">재생</span></button><button id="stop" class="stop" aria-label="멈추고 처음으로">■</button><button id="record" class="record-button" aria-label="풍경과 음악 MP4 녹화"><span aria-hidden="true">●</span> 녹화</button></div><div class="record-status"><span id="record-time" role="status">MP4 · 풍경과 음악</span><a id="record-download" hidden>다시 저장 ↓</a></div>
+    <section class="instrument" aria-label="장단 만들기">
+      <div class="transport-bar"><div class="transport-buttons"><button id="play" class="play" aria-label="장단 재생"><span id="play-icon">▶</span><span id="play-text">재생</span></button><button id="stop" class="stop" aria-label="멈추고 처음으로">■</button><button id="record" class="record-button" aria-label="풍경과 음악 MP4 녹화"><span aria-hidden="true">●</span> 녹화</button></div><div class="record-status"><span id="record-time" role="status">MP4 · 풍경과 음악</span><a id="record-download" hidden>다시 저장 ↓</a></div>
         <div class="tempo-block"><label class="tempo"><span>빠르기</span><input id="bpm" type="number" min="70" max="150" step="1" value="${store.pattern.bpm}" aria-label="빠르기, 분당 박 수"><span class="tempo-rule"></span><input id="tempo-range" type="range" min="70" max="150" value="${store.pattern.bpm}" aria-label="빠르기 조절"></label><span class="tempo-hint">한 칸 = 한 박 · Shift + 클릭: 세게 · 숫자 1–7: 소리 듣기</span></div>
         <div class="transport-right"><span id="position" class="position">01 <span>/ 12</span></span><label class="length-label">박 수<select id="length" aria-label="반복할 박 수"><option value="6">6박</option><option value="8">8박</option><option value="12" selected>12박</option></select></label><button id="clear" class="text-button">비우기</button><button id="undo" class="text-button" hidden>되돌리기</button></div>
       </div>
-      <div class="sequencer-scroll"><div class="sequencer-grid"><div class="grid-heading"><span class="track-heading">둘 · 칸을 눌러 리듬 만들기</span><div id="step-labels" class="step-labels"></div><span class="mix-heading">소리 조절</span></div><div id="tracks"></div></div></div>
+      <div class="sequencer-scroll"><div class="sequencer-grid"><div class="grid-heading"><span class="track-heading">둘 · 칸을 눌러 장단 만들기</span><div id="step-labels" class="step-labels"></div><span class="mix-heading">소리 조절</span></div><div id="tracks"></div></div></div>
       <section class="melody-workshop" aria-label="태평소 가락 놀이">
         <div class="melody-heading"><h2>태평소 · 가락 잇기</h2><span id="melody-state" aria-live="polite">가락을 골라 세 자리에 놓아 보세요</span></div>
         <div class="phrase-palette" role="group" aria-label="가락 고르기">${Object.entries(melodyPhrases).map(([id, p]) => `<button data-phrase="${id}" aria-pressed="${id === 'a'}" style="--phrase-color:${p.color}">${p.name}<small>${p.duration.toFixed(1)}초</small></button>`).join('')}<button data-phrase="rest" aria-pressed="false">쉼<small>한 바퀴</small></button><button id="phrase-preview">고른 가락 듣기 ▶</button></div>
@@ -78,7 +77,7 @@ $('#app').innerHTML = `
     <footer class="credits"><span>© 2026 키큰쌤. All rights reserved.</span><p>악기 샘플은 국립국악원 '국악 디지털 음원' 자료를, 출정 음성은 제공된 녹음을 활용하였습니다.</p></footer>
   </main>
   <div id="toast" role="status" aria-live="polite"></div>
-  <dialog id="help-dialog"><button class="dialog-close" aria-label="도움말 닫기">×</button><span class="eyebrow">대취타 리듬 놀이터</span><h2>리듬을 만들고<br>가락을 이어 보세요!</h2><p>타악기로 장단을 만들고, 태평소 가락을 얹어 나만의 대취타 풍경을 연주해요.</p><ul><li><strong>궁궐과 시작 리듬</strong>을 골라 풍경과 연주를 바꿔요. 왕의 행차, 달빛 연회, 축제 행렬에서 하나를 고른 뒤 자유롭게 고쳐 보세요. <strong>내맘대로</strong>는 분당 90박의 빈 리듬에서 시작해요.</li><li><strong>6박·8박·12박</strong> 중 반복할 길이를 골라요. 리듬 칸 하나가 한 박이에요. 칸을 누르면 켜지고, 다시 누르면 꺼져요. Shift를 누르고 클릭하면 강세를 줘요.</li><li><strong>대취타 악기</strong>를 함께 배치해 보세요. 용고는 다섯 산을 들썩이고, 장구는 폭포를 깨우며, 징은 달빛을, 자바라는 햇살을, 나각은 소나무를 움직여요. 나발의 울림은 하늘에 빛을 더해요.</li><li><strong>태평소 가락 잇기</strong>: 가락 하나·둘·셋 또는 쉼을 고르고 아래 세 자리에 놓아 순서를 만들어요. 가락이 길면 여러 바퀴 이어진 뒤 다음 가락이 첫 박에서 시작해요. 원래 연주 속도로 들려주며, 남는 박은 쉬어요. 가락을 바꾸면 해당 자리가 다시 시작할 때 적용돼요.</li><li><strong>시작하기</strong>를 누르면 검은 화면에 족자가 펼쳐지고 ‘명금일하 대취타 하랍신다’ 출정 음성과 함께 취타대가 준비돼요. 준비가 끝나면 메인 화면으로 이동해요. <strong>재생 버튼</strong>을 누르면 시작하고, 연주 중 누르면 일시정지해요. 다시 누르면 이어서 연주해요. 네모 버튼은 처음으로 정지해요. 스페이스바도 재생과 일시정지에 사용할 수 있어요.</li><li><strong>악기 이름 또는 숫자 1–7</strong>을 눌러 소리를 미리 들어요. 태평소는 현재 고른 가락을 미리 들어요. 합주 중 태평소 미리듣기를 누르면 합주가 멈춰요.</li><li><strong>녹화</strong>를 누르면 첫 박부터 풍경과 음악을 함께 담아요. 6박은 24박, 8박은 32박, 12박은 36박 뒤에 MP4로 자동 저장해요. 녹화 정지를 누르면 그때까지 저장해요. 녹화 중에도 리듬 칸을 누르거나 Shift + 클릭으로 강세를 바꿀 수 있어요. 바꾼 리듬은 이어지는 연주와 영상에 반영돼요. 빠르기와 박 수 등 나머지 설정은 고정돼요.</li><li><strong>쉼·독주·음량</strong>으로 악기 구성을 다듬어요. 비우기는 리듬과 가락 자리를 지우며, 되돌리기로 복구할 수 있어요. 궁궐 풍경과 연주 설정은 이 기기에 저장돼요.</li></ul><p class="help-note">태평소 가락은 제공된 대취타 연주 녹음에서 고른 세 구간이에요. 가락 내부 음은 박자에 맞춰 늘이거나 줄이지 않고, 시작과 끝을 보존해 재생해요.</p><button class="play dialog-done">좋아, 연주 시작! ▶</button></dialog>`;
+  <dialog id="help-dialog"><button class="dialog-close" aria-label="도움말 닫기">×</button><span class="eyebrow">대취타 장단 놀이터</span><h2>장단을 만들고<br>가락을 이어 보세요!</h2><p>타악기로 장단을 만들고, 태평소 가락을 얹어 나만의 대취타 풍경을 연주해요.</p><ul><li><strong>궁궐과 시작 장단</strong>을 골라 풍경과 연주를 바꿔요. 왕의 행차, 달빛 연회, 축제 행렬에서 하나를 고른 뒤 자유롭게 고쳐 보세요. <strong>내맘대로</strong>는 분당 90박의 빈 장단에서 시작해요.</li><li><strong>6박·8박·12박</strong> 중 반복할 길이를 골라요. 장단 칸 하나가 한 박이에요. 칸을 누르면 켜지고, 다시 누르면 꺼져요. Shift를 누르고 클릭하면 강세를 줘요.</li><li><strong>대취타 악기</strong>를 함께 배치해 보세요. 용고는 다섯 산을 들썩이고, 장구는 폭포를 깨우며, 징은 달빛을, 자바라는 햇살을, 나각은 소나무를 움직여요. 나발의 울림은 하늘에 빛을 더해요.</li><li><strong>태평소 가락 잇기</strong>: 가락 하나·둘·셋 또는 쉼을 고르고 아래 세 자리에 놓아 순서를 만들어요. 가락이 길면 여러 바퀴 이어진 뒤 다음 가락이 첫 박에서 시작해요. 원래 연주 속도로 들려주며, 남는 박은 쉬어요. 가락을 바꾸면 해당 자리가 다시 시작할 때 적용돼요.</li><li><strong>시작하기</strong>를 누르면 검은 화면에 족자가 펼쳐지고 ‘명금일하 대취타 하랍신다’ 출정 음성과 함께 취타대가 준비돼요. 준비가 끝나면 메인 화면으로 이동해요. <strong>재생 버튼</strong>을 누르면 시작하고, 연주 중 누르면 일시정지해요. 다시 누르면 이어서 연주해요. 네모 버튼은 처음으로 정지해요. 스페이스바도 재생과 일시정지에 사용할 수 있어요.</li><li><strong>악기 이름 또는 숫자 1–7</strong>을 눌러 소리를 미리 들어요. 태평소는 현재 고른 가락을 미리 들어요. 합주 중 태평소 미리듣기를 누르면 합주가 멈춰요.</li><li><strong>녹화</strong>를 누르면 첫 박부터 풍경과 음악을 함께 담아요. 6박은 24박, 8박은 32박, 12박은 36박 뒤에 MP4로 자동 저장해요. 녹화 정지를 누르면 그때까지 저장해요. 녹화 중에도 장단 칸을 누르거나 Shift + 클릭으로 강세를 바꿀 수 있어요. 바꾼 장단은 이어지는 연주와 영상에 반영돼요. 빠르기와 박 수 등 나머지 설정은 고정돼요.</li><li><strong>쉼·독주·음량</strong>으로 악기 구성을 다듬어요. 비우기는 장단과 가락 자리를 지우며, 되돌리기로 복구할 수 있어요. 궁궐 풍경과 연주 설정은 이 기기에 저장돼요.</li></ul><p class="help-note">태평소 가락은 제공된 대취타 연주 녹음에서 고른 세 구간이에요. 가락 내부 음은 박자에 맞춰 늘이거나 줄이지 않고, 시작과 끝을 보존해 재생해요.</p><button class="play dialog-done">좋아, 연주 시작! ▶</button></dialog>`;
 
 const openingScreen = $('#opening-screen');
 const stopPalaceBreeze = mountPalaceBreeze(openingScreen);
@@ -129,7 +128,7 @@ function renderGrid() {
   $('#step-labels').innerHTML = Array.from({ length }, (_, i) => `<span class="${i % group === 0 ? 'beat-number' : ''}">${String(i + 1).padStart(2, '0')}</span>`).join('');
   $('#tracks').innerHTML = tracks.map((track, index) => `<div class="track-row" data-track="${track.id}" style="--track-color:${track.color}">
     <button class="track-name" data-preview="${track.id}" aria-label="${track.name} 소리 듣기"><span class="track-index">${index + 1}</span><span class="track-dot" aria-hidden="true"><img src="/instruments/${track.id}.svg" alt="" width="48" height="48"></span><span>${track.name}<small>${track.role}</small></span></button>
-    <div class="steps" role="group" aria-label="${track.name} 리듬">${track.id === 'taepyeongso' ? '<span class="melody-row-hint">↓ 아래에서 가락을 이어 보세요</span>' : Array.from({ length }, (_, step) => `<button class="step ${step % group === 0 ? 'beat-start' : ''}" data-step="${step}" data-track="${track.id}" aria-label="${track.name}, ${step + 1}박" aria-pressed="false"><span></span></button>`).join('')}</div>
+    <div class="steps" role="group" aria-label="${track.name} 장단">${track.id === 'taepyeongso' ? '<span class="melody-row-hint">↓ 아래에서 가락을 이어 보세요</span>' : Array.from({ length }, (_, step) => `<button class="step ${step % group === 0 ? 'beat-start' : ''}" data-step="${step}" data-track="${track.id}" aria-label="${track.name}, ${step + 1}박" aria-pressed="false"><span></span></button>`).join('')}</div>
     <div class="track-mix"><button class="mute mix-button" data-action="mute" data-track="${track.id}" aria-label="${track.name} 쉬기" aria-pressed="false">쉼</button><button class="solo mix-button" data-action="solo" data-track="${track.id}" aria-label="${track.name} 독주" aria-pressed="false">독주</button><input class="volume" type="range" data-volume="${track.id}" aria-label="${track.name} 음량" min="0" max="1" step=".01"></div></div>`).join('');
   sync();
 }
@@ -207,7 +206,7 @@ function updateTransport() {
   if (recorder.active && !transport.playing) { recorder.stop(); $('#record-time').textContent = 'MP4 저장 중…'; setRecordingControls(true); }
   $('#play-icon').textContent = transport.playing ? 'Ⅱ' : '▶';
   $('#play-text').textContent = transport.playing ? '일시정지' : transport.paused ? '이어서 재생' : '재생';
-  $('#play').setAttribute('aria-label', transport.playing ? '리듬 일시정지' : transport.paused ? '리듬 이어서 재생' : '리듬 재생');
+  $('#play').setAttribute('aria-label', transport.playing ? '장단 일시정지' : transport.paused ? '장단 이어서 재생' : '장단 재생');
   $('#play').classList.toggle('is-playing', transport.playing);
   $('.scene-dot').classList.toggle('playing', transport.playing);
   updateEnergy();
@@ -304,14 +303,14 @@ $('#bpm').addEventListener('input', event => { const value = (event.target as HT
 $('#bpm').addEventListener('change', event => changeTempo((event.target as HTMLInputElement).value));
 $('#tempo-range').addEventListener('input', event => changeTempo((event.target as HTMLInputElement).value));
 $('#length').addEventListener('change', event => { const length = Number((event.target as HTMLSelectElement).value) as 6 | 8 | 12; if (transport.playing) { transport.pendingLength = length; toast(`${length}박으로 변경 예약 · 현재 가락 자리 뒤에 적용해요.`); } else { store.pattern.length = length; renderGrid(); store.change(); } markCustom(); });
-$('#clear').addEventListener('click', () => { restoreMelody = [...store.pattern.melody]; restoreClear = tracks.map(({ id }) => [...store.pattern.tracks[id].steps]); transport.stop(); store.clear(); $('#undo').hidden = false; markCustom(); toast('리듬을 비웠어요. 되돌리기를 누르면 돌아와요.'); });
+$('#clear').addEventListener('click', () => { restoreMelody = [...store.pattern.melody]; restoreClear = tracks.map(({ id }) => [...store.pattern.tracks[id].steps]); transport.stop(); store.clear(); $('#undo').hidden = false; markCustom(); toast('장단을 비웠어요. 되돌리기를 누르면 돌아와요.'); });
 $('#undo').addEventListener('click', () => { if (!restoreClear) return; if (restoreMelody) store.pattern.melody = restoreMelody; tracks.forEach(({ id }, i) => store.pattern.tracks[id].steps = restoreClear![i]); restoreClear = undefined; $('#undo').hidden = true; store.change(); });
 document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => button.addEventListener('click', () => {
   const wasPlaying = transport.playing; transport.stop();
   store.load(button.dataset.preset as PresetId); renderGrid();
   restoreClear = undefined; $('#undo').hidden = true;
   markCustom(); button.classList.add('selected');
-  toast(`${button.querySelector('span:nth-child(2)')!.firstChild!.textContent} 리듬을 불러왔어요.`);
+  toast(`${button.querySelector('span:nth-child(2)')!.firstChild!.textContent} 장단을 불러왔어요.`);
   if (wasPlaying) void play();
 }));
 const dialog = $<HTMLDialogElement>('#help-dialog');
