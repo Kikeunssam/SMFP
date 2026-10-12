@@ -211,7 +211,6 @@ function updateTransport() {
   $('#play-text').textContent = transport.playing ? '일시정지' : transport.paused ? '이어서 재생' : '재생';
   $('#play').setAttribute('aria-label', transport.playing ? '장단 일시정지' : transport.paused ? '장단 이어서 재생' : '장단 재생');
   $('#play').classList.toggle('is-playing', transport.playing);
-  $('.scene-dot').classList.toggle('playing', transport.playing);
   updateEnergy();
 }
 async function preview(id: TrackId) {
