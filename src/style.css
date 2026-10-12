@@ -65,13 +65,13 @@ body:has(.opening-screen:not([hidden])){overflow:hidden;height:100dvh}
 .brand-glyph:before,.brand-glyph:after{content:none}
 .opening-lockup{display:flex;align-items:center;justify-content:center;gap:15px;margin:12px 0 8px}
 .opening-mark .brand-glyph{width:76px;height:60px;filter:drop-shadow(3px 4px #07172e)}
-@media(max-width:700px){.opening-copy{top:7vh}.opening-start{top:36vh;min-width:190px;min-height:53px;font-size:15px}.opening-contact{top:calc(36vh + 73px)}.opening-bottom{bottom:23px;font-size:9px}.opening-screen:after{inset:8px}}
-@media(max-width:440px){.opening-screen{background-position:55% center}.opening-copy{inset:8vh 10px auto}.opening-copy h1{font-size:44px}.opening-copy p{font-size:11px;letter-spacing:.04em}.opening-start{top:34vh;min-width:174px}.opening-contact{top:calc(34vh + 73px)}.brand-glyph{width:43px;height:36px}.opening-mark .brand-glyph{width:58px;height:48px}.opening-lockup{gap:9px}}
+@media(max-width:700px){.opening-screen{background-position:center center}.opening-copy{top:7vh}.opening-start{top:36vh;min-width:190px;min-height:53px;font-size:15px}.opening-contact{top:calc(36vh + 73px)}.opening-bottom{bottom:23px;font-size:9px}.opening-screen:after{inset:8px}}
+@media(max-width:440px){.opening-screen{background-position:center center}.opening-copy{inset:8vh 10px auto}.opening-copy h1{font-size:44px}.opening-copy p{font-size:11px;letter-spacing:.04em}.opening-start{top:34vh;min-width:174px}.opening-contact{top:calc(34vh + 73px)}.brand-glyph{width:43px;height:36px}.opening-mark .brand-glyph{width:58px;height:48px}.opening-lockup{gap:9px}}
 @media(prefers-reduced-motion:reduce){.shell.app-ready{animation:none}.opening-screen.leaving{animation:opening-exit .2s linear both}}
 
 .opening-breeze{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;image-rendering:pixelated;pointer-events:none}
 .opening-screen:before,.opening-screen:after{z-index:1}
-@media(max-width:440px){.opening-breeze{object-position:55% center}}
+@media(max-width:700px){.opening-breeze{object-position:center center}}
 
 /* Royal announcement between the palace and the sequencer. */
 .opening-screen.ceremony{background:#050505}
@@ -88,9 +88,11 @@ body:has(.opening-screen:not([hidden])){overflow:hidden;height:100dvh}
 .ceremony-loading p{color:#f1ce79;font-size:14px;margin:0 0 17px;letter-spacing:2px}
 .ceremony-meter{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;padding:5px;border:2px solid #f1ce79;box-shadow:3px 3px #5d4929;background:#121b28;height:26px}
 .ceremony-meter i{background:#253145}.ceremony-meter i.filled{background:#f1ce79;box-shadow:inset 0 3px #fff2bb,inset 0 -3px #a97c34}
+.orientation-hint{display:none}
 .ceremony-done{opacity:0}
 @keyframes scroll-unroll{from{clip-path:inset(0 49%)}to{clip-path:inset(-24px -24px)}}
 @media(max-width:540px){.ceremony-stage{padding:25px;gap:45px}.royal-scroll{padding:12px 17px}.scroll-paper{padding:25px 8px}.scroll-mobile-break{display:block}.ceremony-loading p{font-size:12px}.ceremony-meter{gap:2px}}
+@media(max-width:700px) and (orientation:portrait){.ceremony-loading .orientation-hint{display:block;margin:12px 0 0;color:#dce8f0;text-align:center;font-size:11px;line-height:1.7;letter-spacing:.1px}}
 @media(prefers-reduced-motion:reduce){.royal-scroll{animation:none}.ceremony-stage{transition:none}}
 
 /* Large instrument portraits retain each track's original color. */

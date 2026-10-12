@@ -6,7 +6,7 @@ export async function runOpeningCeremony(host: HTMLElement, audio: AudioEngine) 
   const stage = document.createElement('div');
   stage.className = 'ceremony-stage';
   stage.innerHTML = `<div class="royal-scroll"><div class="scroll-paper"><p>명금일하<br class="scroll-mobile-break"> 대취타 하랍신다</p></div></div>
-    <div class="ceremony-loading"><p role="status">취타대 준비 중</p><div class="ceremony-meter" role="progressbar" aria-label="취타대 준비 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">${'<i></i>'.repeat(24)}</div></div>`;
+    <div class="ceremony-loading"><p role="status">취타대 준비 중</p><div class="ceremony-meter" role="progressbar" aria-label="취타대 준비 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">${'<i></i>'.repeat(24)}</div><p class="orientation-hint">화면을 가로로 돌리면 더 넓게 즐길 수 있어요</p></div>`;
   host.append(stage);
   const meter = stage.querySelector<HTMLElement>('.ceremony-meter')!;
   const cells = Array.from(meter.children);
