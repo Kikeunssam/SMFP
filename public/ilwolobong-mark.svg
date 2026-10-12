@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 100" shape-rendering="crispEdges" role="img" aria-labelledby="title desc">
+<title id="title">일월오봉 픽셀 심볼</title><desc id="desc">달과 해, 다섯 봉우리, 물결을 담은 픽셀 문양</desc>
+<rect x="3" y="3" width="122" height="94" fill="#10274a" stroke="#f1ce79" stroke-width="4"/>
+<path d="M3 17V3h15M110 3h15v14M3 83v14h15m92 0h15V83" fill="none" stroke="#fff0bc" stroke-width="5"/>
+<path d="M20 24h8v-8h16v8h8v16h-8v8H28v-8h-8z" fill="#fff0c2"/>
+<path d="M91 19h16v8h8v16h-8v8H91v-8h-8V27h8z" fill="#f26e50"/>
+<path d="M12 78V70h8v-8h8v-8h8v8h8v8h8v8zM29 78V66h8v-8h8v-8h8v8h8v8h8v12zM46 78V62h8v-8h6v-8h6v-8h8v8h6v8h8v8h8v16zM68 78V66h8v-8h8v-8h8v8h8v8h8v12zM88 78V70h8v-8h8v-8h8v8h8v8h8v8z" fill="#75a978"/>
+<path d="M21 66h8v-8h6v8h8M39 62h8v-8h6v8h8M57 54h8v-8h6v8h8M78 62h8v-8h6v8h8M98 66h8v-8h6v8h8" fill="none" stroke="#c6dc8c" stroke-width="3"/>
+<path d="M13 81h15v5h14v-5h14v5h14v-5h14v5h14v-5h14v5h14v-5h9v11H13z" fill="#83bdd0"/>
+<path d="M15 94h98" stroke="#f1ce79" stroke-width="3"/>
+</svg>

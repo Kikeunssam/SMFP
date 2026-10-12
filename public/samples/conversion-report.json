@@ -1,0 +1,144 @@
+[
+  {
+    "id": "janggu",
+    "source": "Janggu_1_1.wav",
+    "duration": 4.085328798185941,
+    "wavBytes": 720732,
+    "m4aBytes": 14681,
+    "activeSegments": [
+      [
+        0.2,
+        0.94
+      ]
+    ],
+    "peak": 0.9739
+  },
+  {
+    "id": "nagak",
+    "source": "Nagak_1 (1).wav",
+    "duration": 6.831995464852608,
+    "wavBytes": 1205244,
+    "m4aBytes": 108662,
+    "activeSegments": [
+      [
+        0.2,
+        6.38
+      ]
+    ],
+    "peak": 0.7863
+  },
+  {
+    "id": "nabal",
+    "source": "Nabal_1.wav",
+    "duration": 8.725328798185942,
+    "wavBytes": 1539228,
+    "m4aBytes": 139495,
+    "activeSegments": [
+      [
+        0.2,
+        8.52
+      ]
+    ],
+    "peak": 0.9709
+  },
+  {
+    "id": "taepyeongso",
+    "source": "태평소_강세별음계_강.wav",
+    "duration": 82.56843537414966,
+    "wavBytes": 14682578,
+    "m4aBytes": 983066,
+    "activeSegments": [
+      [
+        0.54,
+        6.48
+      ],
+      [
+        7.34,
+        14.14
+      ],
+      [
+        15.16,
+        22.58
+      ],
+      [
+        23.66,
+        30.84
+      ],
+      [
+        31.7,
+        37.24
+      ],
+      [
+        38.12,
+        43.76
+      ],
+      [
+        44.62,
+        50.78
+      ],
+      [
+        52.42,
+        57.96
+      ],
+      [
+        59.0,
+        63.84
+      ],
+      [
+        64.58,
+        69.9
+      ],
+      [
+        70.64,
+        76.84
+      ],
+      [
+        77.5,
+        82.58
+      ]
+    ],
+    "peak": 0.9756
+  },
+  {
+    "id": "jing",
+    "source": "Jing_1.wav",
+    "duration": 14.471995464852608,
+    "wavBytes": 2552940,
+    "m4aBytes": 194195,
+    "activeSegments": [
+      [
+        0.2,
+        10.08
+      ]
+    ],
+    "peak": 0.969
+  },
+  {
+    "id": "jabara",
+    "source": "자바라_1.wav",
+    "duration": 4.085328798185941,
+    "wavBytes": 720732,
+    "m4aBytes": 43663,
+    "activeSegments": [
+      [
+        0.42,
+        1.44
+      ]
+    ],
+    "peak": 1.0
+  },
+  {
+    "id": "yonggo",
+    "source": "Yonggo_1.wav",
+    "duration": 4.085328798185941,
+    "wavBytes": 720732,
+    "m4aBytes": 14650,
+    "activeSegments": [
+      [
+        0.42,
+        0.74
+      ]
+    ],
+    "peak": 0.9703
+  }
+]
