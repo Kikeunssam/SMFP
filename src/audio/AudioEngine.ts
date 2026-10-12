@@ -1,3 +1,4 @@
+import { loadAudio, releaseGain } from './loadAudio';
 import { tracks, type TrackId } from '../config/tracks';
 import { sampleManifest } from '../config/sampleManifest';
 import { audible, type Pattern } from '../sequencer/Pattern';
@@ -7,6 +8,7 @@ interface Voice { source: AudioBufferSourceNode; envelope: GainNode; when: numbe
 export interface TriggerOptions { velocity?: number; start?: number; gate?: number; preview?: boolean }
 export class AudioEngine {
   context?: AudioContext;
+  onInterrupted: () => void = () => {};
   readonly bank = new SampleBank();
   private effects?: Effects;
   private channels = new Map<TrackId, GainNode>();
@@ -17,19 +19,33 @@ export class AudioEngine {
   async unlock() {
     if (!this.context) {
       this.context = new AudioContext({ latencyHint: 'interactive' });
+      this.context.onstatechange = () => {
+        if (this.context?.state !== 'running') this.onInterrupted();
+      };
       this.effects = new Effects(this.context);
       tracks.forEach(({ id }) => { const gain = this.context!.createGain(); gain.connect(this.effects!.input); this.channels.set(id, gain); });
-      this.loading = Promise.all([this.bank.load(this.context), this.loadAnnouncement(this.context)]).then(() => {});
+
     }
-    await this.context.resume();
+    // Resume directly in the tap handler, before fetching or decoding samples.
+    const resumed = this.context.resume();
+    if (!this.loading) {
+      this.loading = Promise.all([this.bank.load(this.context), this.announcement ? Promise.resolve() : this.loadAnnouncement(this.context)])
+        .then(() => {}).finally(() => { this.loading = undefined; });
+    }
+    let resumeTimer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([resumed, new Promise<never>((_, reject) => {
+        resumeTimer = setTimeout(() => reject(new Error('Audio resume timed out; tap play to retry')), 5000);
+      })]);
+    } finally { clearTimeout(resumeTimer); }
     await this.loading;
+    if (this.context.state !== 'running') throw new Error('Audio context is not running');
+    if (![...this.bank.status.values()].some(status => status === 'sample')) throw new Error('Instrument samples could not be loaded');
   }
 
   private async loadAnnouncement(context: AudioContext) {
     try {
-      const response = await fetch('/samples/daechwita-announcement.m4a', { signal: AbortSignal.timeout(8000) });
-      if (!response.ok) throw new Error(`Announcement HTTP ${response.status}`);
-      this.announcement = await context.decodeAudioData(await response.arrayBuffer());
+      this.announcement = await loadAudio(context, '/samples/daechwita-announcement.m4a');
     } catch (error) { console.warn('SMFP: opening announcement unavailable.', error); }
   }
   get announcementDuration() { return (this.announcement?.duration ?? 0) / 1.3 + .035; }
@@ -92,8 +108,7 @@ export class AudioEngine {
     source.start(when, start); source.stop(when + gate + .005);
   }
   private release(voice: Voice, at: number) {
-    voice.envelope.gain.cancelAndHoldAtTime(at);
-    voice.envelope.gain.linearRampToValueAtTime(0, at + .008);
+    releaseGain(voice.envelope.gain, at);
     voice.source.stop(at + .01); voice.ends = at + .01;
   }
   stopAll() { this.voices.forEach(voice => this.release(voice, this.time)); }

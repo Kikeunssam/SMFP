@@ -24,7 +24,15 @@ export async function runOpeningCeremony(host: HTMLElement, audio: AudioEngine) 
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    const heard = await audio.playAnnouncement();
+    // Do not trap the user on this screen if a mobile audio interruption
+    // prevents the source's ended event from arriving.
+    let voiceTimer: ReturnType<typeof setTimeout> | undefined;
+    let heard = false;
+    try {
+      heard = await Promise.race([audio.playAnnouncement(), new Promise<boolean>(resolve => {
+        voiceTimer = setTimeout(() => { audio.stopAnnouncement(); resolve(false); }, Math.max(2000, audio.announcementDuration * 1000 + 2000));
+      })]);
+    } finally { clearTimeout(voiceTimer); }
     if (!heard) await new Promise(resolve => setTimeout(resolve, 1200));
   } catch (error) {
     console.warn('Opening voice unavailable; continuing to the sequencer.', error);

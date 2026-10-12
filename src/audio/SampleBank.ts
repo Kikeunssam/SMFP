@@ -1,3 +1,4 @@
+import { loadAudio } from './loadAudio';
 import { sampleManifest } from '../config/sampleManifest';
 import { tracks, type TrackId } from '../config/tracks';
 export class SampleBank {
@@ -5,12 +6,11 @@ export class SampleBank {
   readonly status = new Map<TrackId, 'sample' | 'demo' | 'silent'>();
   async load(context: AudioContext) {
     await Promise.all(tracks.map(async ({ id }) => {
+      if (this.status.get(id) === 'sample') return;
       const entry = sampleManifest[id];
       if (entry.url) {
         try {
-          const response = await fetch(entry.url, { signal: AbortSignal.timeout(8000) });
-          if (!response.ok) throw new Error(`Sample HTTP ${response.status}`);
-          this.buffers.set(id, await context.decodeAudioData(await response.arrayBuffer()));
+          this.buffers.set(id, await loadAudio(context, entry.url));
           this.status.set(id, 'sample'); return;
         } catch (error) { console.warn(`SMFP: ${id} sample unavailable; using ${entry.fallback} fallback.`, error); }
       }

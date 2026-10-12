@@ -109,3 +109,42 @@ body:has(.opening-screen:not([hidden])){overflow:hidden;height:100dvh}
 .header-link{color:var(--cream)}
 @media(max-width:570px){.header-actions{gap:4px}.masthead .text-button{font-size:8px;padding:5px 6px}.masthead .text-button span{margin-left:3px}.brand{font-size:24px}}
 .record-status[hidden]{display:none}
+
+/* Phone/tablet controls stay the same in portrait and landscape. */
+.mobile-device #record,.mobile-device #record-status,.mobile-device .record-help,
+.mobile-device .header-link,.mobile-device .keyboard-hint{display:none!important}
+.mobile-device .brand-sub,.mobile-device .preset,.mobile-device .palace-option,
+.mobile-device .melody-workshop,.mobile-device .credits,.mobile-device dialog{word-break:keep-all;overflow-wrap:break-word}
+.mobile-device .tempo-hint{font-size:10px;line-height:1.6}
+@media(max-width:850px){
+  .session-panel{display:block}
+  .presets{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:570px){
+  .masthead{height:auto;min-height:96px;gap:12px;padding:18px 0;flex-wrap:wrap}
+  .brand{min-width:0;flex:1}
+  .brand-copy{min-width:0}
+  .brand-sub{font-size:10px;line-height:1.7;word-break:keep-all}
+  .header-actions{flex-shrink:0}
+  .masthead .text-button{font-size:10px;min-height:40px;padding:8px}
+  .palace-option{padding:10px 6px;gap:5px;line-height:1.5}
+  .palace-option small{line-height:1.6;margin-top:3px}
+  .preset{gap:6px;padding:9px 7px;min-height:75px}
+  .preset small{font-size:10px;line-height:1.7}
+  .preset-arrow{display:none}
+  .transport-bar{gap:15px 12px;padding:14px 12px;align-items:flex-start}
+  .transport-buttons{flex-shrink:0}
+  .tempo-block{flex:1;min-width:115px;gap:6px}
+  .transport-right{width:100%;margin-left:0;justify-content:space-between;gap:8px}
+  .tempo-hint{letter-spacing:0;line-height:1.6}
+  .melody-heading{gap:6px}
+  .melody-heading>span,.melody-workshop p{font-size:11px;line-height:1.9}
+  .phrase-palette{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .phrase-palette button{padding:10px 8px;line-height:1.6}
+  .melody-slots button{font-size:11px;line-height:1.7;border-left-width:4px}
+  .melody-slots small{font-size:10px;line-height:1.7}
+  footer.credits{line-height:1.8;padding:20px 0;text-align:center}
+  footer.credits p{text-align:center;line-height:1.9}
+  dialog{max-width:calc(100vw - 28px);padding:24px 18px}
+  dialog p,dialog li{line-height:1.9}
+}

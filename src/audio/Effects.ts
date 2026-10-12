@@ -1,5 +1,13 @@
 export class Effects {
-  readonly recording: MediaStreamAudioDestinationNode;
+  private recordingNode?: MediaStreamAudioDestinationNode;
+  private compressor: DynamicsCompressorNode;
+  get recording() {
+    if (!this.recordingNode) {
+      this.recordingNode = this.context.createMediaStreamDestination();
+      this.compressor.connect(this.recordingNode);
+    }
+    return this.recordingNode;
+  }
   readonly input: BiquadFilterNode;
   readonly reverbSend: GainNode;
   readonly delaySend: GainNode;
@@ -7,9 +15,8 @@ export class Effects {
   constructor(private context: AudioContext) {
     this.input = context.createBiquadFilter(); this.input.type = 'lowpass'; this.input.frequency.value = 18000;
     const master = context.createGain(); master.gain.value = .65;
-    const compressor = context.createDynamicsCompressor(); compressor.threshold.value = -12; compressor.ratio.value = 6;
+    const compressor = this.compressor = context.createDynamicsCompressor(); compressor.threshold.value = -12; compressor.ratio.value = 6;
     this.input.connect(master); master.connect(compressor); compressor.connect(context.destination);
-    this.recording = context.createMediaStreamDestination(); compressor.connect(this.recording);
     this.delaySend = context.createGain(); this.delay = context.createDelay(2);
     const feedback = context.createGain(); feedback.gain.value = .24;
     const damp = context.createBiquadFilter(); damp.frequency.value = 3500;
