@@ -29,3 +29,18 @@ test('failed downloads retry while successfully decoded instruments stay cached'
   assert.equal(bank.status.get('janggu'), 'sample');
   assert.equal(requests.length, 8);
 });
+
+
+test('music opts out of ambient mute while unsupported audio sessions remain usable', async t => {
+  const { configurePlaybackSession } = await import('../src/audio/playbackSession');
+  const platform = { audioSession: { type: 'auto' } };
+  configurePlaybackSession(platform);
+  assert.equal(platform.audioSession.type, 'playback');
+  platform.audioSession.type = 'ambient';
+  configurePlaybackSession(platform);
+  assert.equal(platform.audioSession.type, 'playback');
+  assert.doesNotThrow(() => configurePlaybackSession({}));
+  t.mock.method(console, 'warn', () => {});
+  const restricted = { audioSession: { get type() { return 'auto'; }, set type(_: string) { throw new Error('restricted webview'); } } };
+  assert.doesNotThrow(() => configurePlaybackSession(restricted));
+});

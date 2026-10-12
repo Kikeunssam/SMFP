@@ -1,3 +1,4 @@
+import { configurePlaybackSession } from './playbackSession';
 import { loadAudio, releaseGain } from './loadAudio';
 import { tracks, type TrackId } from '../config/tracks';
 import { sampleManifest } from '../config/sampleManifest';
@@ -17,6 +18,8 @@ export class AudioEngine {
   private announcement?: AudioBuffer;
   private announcementVoice?: AudioBufferSourceNode;
   async unlock() {
+    // Apply before creating/resuming the context, including after interruptions.
+    configurePlaybackSession(navigator as Navigator & { audioSession?: { type: string } });
     if (!this.context) {
       this.context = new AudioContext({ latencyHint: 'interactive' });
       this.context.onstatechange = () => {
