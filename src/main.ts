@@ -41,7 +41,11 @@ $('#app').innerHTML = `
   </section>
   <main class="shell">
     <header class="masthead"><a class="brand" href="./" aria-label="일월오봉 처음으로">${icons}<span class="brand-copy"><span class="brand-title">일월오봉</span><small class="brand-sub">해, 달, 다섯 봉우리 그리고 대취타</small></span></a>
-      <button class="text-button" id="help" aria-label="놀이 방법">놀이 방법 <span>↗</span></button>
+      <nav class="header-actions" aria-label="도움말과 설명 자료">
+        <a class="text-button header-link" href="https://www.gogung.go.kr/gogung/pgm/psgudMng/view.do?psgudSn=363399" target="_blank" rel="noopener noreferrer">일월오봉도란? <span aria-hidden="true">↗</span></a>
+        <a class="text-button header-link" href="https://www.gugak.go.kr/ency/topic/view/204" target="_blank" rel="noopener noreferrer">대취타란? <span aria-hidden="true">↗</span></a>
+        <button class="text-button" id="help" aria-label="놀이 방법">놀이 방법 <span>↗</span></button>
+      </nav>
     </header>
     <section class="section-heading"><div class="palace-picker"><span class="palace-label">어느 궁궐에서 연주할까?</span><div class="palace-options" role="group" aria-label="궁궐별 일월오봉도 선택">${Object.values(palaceThemes).map(theme => `<button class="palace-option" data-palace="${theme.id}" aria-pressed="${theme.id === selectedPalace}" style="--palace-accent:${theme.accent}"><span class="palace-chip" aria-hidden="true"></span><span>${theme.palace}<small>${theme.hall}</small></span></button>`).join('')}</div></div></section>
     <section class="performance" aria-label="소리에 반응하는 일월오봉도">
