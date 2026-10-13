@@ -154,3 +154,7 @@ body:has(.opening-screen:not([hidden])){overflow:hidden;height:100dvh}
 .mobile-device .opening-worksheet{display:none}
 @media(max-width:700px){.opening-contact.opening-worksheet{top:calc(36vh + 123px)}}
 @media(max-width:440px){.opening-contact.opening-worksheet{top:calc(34vh + 123px)}}
+
+.mobile-step-hint{display:none}
+.mobile-device .mobile-step-hint{display:inline}
+.mobile-device .step{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}

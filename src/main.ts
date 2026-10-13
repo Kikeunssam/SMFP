@@ -69,7 +69,7 @@ $('#app').innerHTML = `
     </section>
     <section class="instrument" aria-label="장단 만들기">
       <div class="transport-bar"><div class="transport-buttons"><button id="play" class="play" aria-label="장단 재생"><span id="play-icon">▶</span><span id="play-text">재생</span></button><button id="stop" class="stop" aria-label="멈추고 처음으로">■</button><button id="record" class="record-button" aria-label="풍경과 음악 MP4 녹화"><span aria-hidden="true">●</span> 녹화</button></div><div class="record-status" id="record-status" hidden><span id="record-time" role="status"></span><a id="record-download" hidden>다시 저장 ↓</a></div>
-        <div class="tempo-block"><label class="tempo"><span>빠르기</span><input id="bpm" type="number" min="70" max="150" step="1" value="${store.pattern.bpm}" aria-label="빠르기, 분당 박 수"><span class="tempo-rule"></span><input id="tempo-range" type="range" min="70" max="150" value="${store.pattern.bpm}" aria-label="빠르기 조절"></label><span class="tempo-hint">한 칸 = 한 박<span class="keyboard-hint"> · Shift + 클릭: 세게 · 숫자 1–7: 소리 듣기</span></span></div>
+        <div class="tempo-block"><label class="tempo"><span>빠르기</span><input id="bpm" type="number" min="70" max="150" step="1" value="${store.pattern.bpm}" aria-label="빠르기, 분당 박 수"><span class="tempo-rule"></span><input id="tempo-range" type="range" min="70" max="150" value="${store.pattern.bpm}" aria-label="빠르기 조절"></label><span class="tempo-hint">한 칸 = 한 박<span class="keyboard-hint"> · Shift + 클릭: 세게 · 숫자 1–7: 소리 듣기</span><span class="mobile-step-hint"> · 꾹 누르기: 강박</span></span></div>
         <div class="transport-right"><span id="position" class="position">01 <span>/ 12</span></span><label class="length-label">박 수<select id="length" aria-label="반복할 박 수"><option value="6">6박</option><option value="8">8박</option><option value="12" selected>12박</option></select></label><button id="clear" class="text-button">비우기</button><button id="undo" class="text-button" hidden>되돌리기</button></div>
       </div>
       <div class="sequencer-scroll"><div class="sequencer-grid"><div class="grid-heading"><span class="track-heading">둘 · 칸을 눌러 장단 만들기</span><div id="step-labels" class="step-labels"></div><span class="mix-heading">소리 조절</span></div><div id="tracks"></div></div></div>
@@ -83,7 +83,7 @@ $('#app').innerHTML = `
     <footer class="credits"><span>© 2026 키큰쌤. All rights reserved.</span><p>악기 샘플은 국립국악원 '국악 디지털 음원' 자료를, 출정 음성은 제공된 녹음을 활용하였습니다.</p></footer>
   </main>
   <div id="toast" role="status" aria-live="polite"></div>
-  <dialog id="help-dialog"><button class="dialog-close" aria-label="도움말 닫기">×</button><span class="eyebrow">대취타 장단 놀이터</span><h2>장단을 만들고<br>가락을 이어 보세요!</h2><p>타악기로 장단을 만들고, 태평소 가락을 얹어 나만의 대취타 풍경을 연주해요.</p><ul><li><strong>궁궐과 시작 장단</strong>을 골라 풍경과 연주를 바꿔요. 왕의 행차, 달빛 연회, 축제 행렬에서 하나를 고른 뒤 자유롭게 고쳐 보세요. <strong>내맘대로</strong>는 분당 90박의 빈 장단에서 시작해요.</li><li><strong>6박·8박·12박</strong> 중 반복할 길이를 골라요. 장단 칸 하나가 한 박이에요. 칸을 누르면 켜지고, 다시 누르면 꺼져요. Shift를 누르고 클릭하면 강세를 줘요.</li><li><strong>대취타 악기</strong>를 함께 배치해 보세요. 용고는 다섯 산을 들썩이고, 장구는 폭포를 깨우며, 징은 달빛을, 자바라는 햇살을, 나각은 소나무를 움직여요. 나발의 울림은 하늘에 빛을 더해요.</li><li><strong>태평소 가락 잇기</strong>: 가락 하나·둘·셋 또는 쉼을 고르고 아래 세 자리에 놓아 순서를 만들어요. 가락이 길면 여러 바퀴 이어진 뒤 다음 가락이 첫 박에서 시작해요. 원래 연주 속도로 들려주며, 남는 박은 쉬어요. 가락을 바꾸면 해당 자리가 다시 시작할 때 적용돼요.</li><li><strong>시작하기</strong>를 누르면 검은 화면에 족자가 펼쳐지고 ‘명금일하 대취타 하랍신다’ 출정 음성과 함께 취타대가 준비돼요. 준비가 끝나면 메인 화면으로 이동해요. <strong>재생 버튼</strong>을 누르면 시작하고, 연주 중 누르면 일시정지해요. 다시 누르면 이어서 연주해요. 네모 버튼은 처음으로 정지해요. 스페이스바도 재생과 일시정지에 사용할 수 있어요.</li><li><strong>악기 이름 또는 숫자 1–7</strong>을 눌러 소리를 미리 들어요. 태평소는 현재 고른 가락을 미리 들어요. 합주 중 태평소 미리듣기를 누르면 합주가 멈춰요.</li><li class="record-help"><strong>녹화</strong>를 누르면 첫 박부터 풍경과 음악을 함께 담아요. 6박은 24박, 8박은 32박, 12박은 36박 뒤에 MP4로 자동 저장해요. 녹화 정지를 누르면 그때까지 저장해요. 녹화 중에도 장단 칸을 누르거나 Shift + 클릭으로 강세를 바꿀 수 있어요. 바꾼 장단은 이어지는 연주와 영상에 반영돼요. 빠르기와 박 수 등 나머지 설정은 고정돼요.</li><li><strong>쉼·독주·음량</strong>으로 악기 구성을 다듬어요. 비우기는 장단과 가락 자리를 지우며, 되돌리기로 복구할 수 있어요. 궁궐 풍경과 연주 설정은 이 기기에 저장돼요.</li></ul><p class="help-note">태평소 가락은 제공된 대취타 연주 녹음에서 고른 세 구간이에요. 가락 내부 음은 박자에 맞춰 늘이거나 줄이지 않고, 시작과 끝을 보존해 재생해요.</p><button class="play dialog-done">좋아, 연주 시작! ▶</button></dialog>`;
+  <dialog id="help-dialog"><button class="dialog-close" aria-label="도움말 닫기">×</button><span class="eyebrow">대취타 장단 놀이터</span><h2>장단을 만들고<br>가락을 이어 보세요!</h2><p>타악기로 장단을 만들고, 태평소 가락을 얹어 나만의 대취타 풍경을 연주해요.</p><ul><li><strong>궁궐과 시작 장단</strong>을 골라 풍경과 연주를 바꿔요. 왕의 행차, 달빛 연회, 축제 행렬에서 하나를 고른 뒤 자유롭게 고쳐 보세요. <strong>내맘대로</strong>는 분당 90박의 빈 장단에서 시작해요.</li><li><strong>6박·8박·12박</strong> 중 반복할 길이를 골라요. 장단 칸 하나가 한 박이에요. 칸을 누르면 켜지고, 다시 누르면 꺼져요. Shift를 누르고 클릭하면 강세를 줘요. 모바일에서는 칸을 꾹 누르면 강박이 돼요.</li><li><strong>대취타 악기</strong>를 함께 배치해 보세요. 용고는 다섯 산을 들썩이고, 장구는 폭포를 깨우며, 징은 달빛을, 자바라는 햇살을, 나각은 소나무를 움직여요. 나발의 울림은 하늘에 빛을 더해요.</li><li><strong>태평소 가락 잇기</strong>: 가락 하나·둘·셋 또는 쉼을 고르고 아래 세 자리에 놓아 순서를 만들어요. 가락이 길면 여러 바퀴 이어진 뒤 다음 가락이 첫 박에서 시작해요. 원래 연주 속도로 들려주며, 남는 박은 쉬어요. 가락을 바꾸면 해당 자리가 다시 시작할 때 적용돼요.</li><li><strong>시작하기</strong>를 누르면 검은 화면에 족자가 펼쳐지고 ‘명금일하 대취타 하랍신다’ 출정 음성과 함께 취타대가 준비돼요. 준비가 끝나면 메인 화면으로 이동해요. <strong>재생 버튼</strong>을 누르면 시작하고, 연주 중 누르면 일시정지해요. 다시 누르면 이어서 연주해요. 네모 버튼은 처음으로 정지해요. 스페이스바도 재생과 일시정지에 사용할 수 있어요.</li><li><strong>악기 이름 또는 숫자 1–7</strong>을 눌러 소리를 미리 들어요. 태평소는 현재 고른 가락을 미리 들어요. 합주 중 태평소 미리듣기를 누르면 합주가 멈춰요.</li><li class="record-help"><strong>녹화</strong>를 누르면 첫 박부터 풍경과 음악을 함께 담아요. 6박은 24박, 8박은 32박, 12박은 36박 뒤에 MP4로 자동 저장해요. 녹화 정지를 누르면 그때까지 저장해요. 녹화 중에도 장단 칸을 누르거나 Shift + 클릭으로 강세를 바꿀 수 있어요. 바꾼 장단은 이어지는 연주와 영상에 반영돼요. 빠르기와 박 수 등 나머지 설정은 고정돼요.</li><li><strong>쉼·독주·음량</strong>으로 악기 구성을 다듬어요. 비우기는 장단과 가락 자리를 지우며, 되돌리기로 복구할 수 있어요. 궁궐 풍경과 연주 설정은 이 기기에 저장돼요.</li></ul><p class="help-note">태평소 가락은 제공된 대취타 연주 녹음에서 고른 세 구간이에요. 가락 내부 음은 박자에 맞춰 늘이거나 줄이지 않고, 시작과 끝을 보존해 재생해요.</p><button class="play dialog-done">좋아, 연주 시작! ▶</button></dialog>`;
 
 const openingScreen = $('#opening-screen');
 const stopPalaceBreeze = mountPalaceBreeze(openingScreen);
@@ -293,8 +293,41 @@ $('#record').addEventListener('click', async () => {
 });
 $('#play').addEventListener('click', () => void play());
 $('#stop').addEventListener('click', () => { startRequest++; starting = false; audio.stopAnnouncement(); transport.stop(); updateTransport(); });
+const longPressedSteps = new WeakSet<HTMLButtonElement>();
+let holdTimer: ReturnType<typeof setTimeout> | undefined;
+let holdPointerId: number | undefined;
+let holdButton: HTMLButtonElement | undefined;
+$('#tracks').addEventListener('pointerdown', event => {
+  if (!mobileDevice || event.pointerType === 'mouse') return;
+  const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.step');
+  if (!button || button.disabled) return;
+  clearTimeout(holdTimer);
+  holdPointerId = event.pointerId; holdButton = button;
+  holdTimer = setTimeout(() => {
+    if (!holdButton?.isConnected || holdPointerId !== event.pointerId) return;
+    const id = holdButton.dataset.track as TrackId, step = Number(holdButton.dataset.step);
+    store.toggle(id, step, true); markCustom();
+    longPressedSteps.add(holdButton);
+    // Stop pointer-generated click from applying a second, normal-strength edit.
+    holdButton.dataset.longPressed = 'true';
+    if (navigator.vibrate) navigator.vibrate(12);
+    holdTimer = undefined;
+  }, 450);
+});
+const cancelStepHold = (event: PointerEvent) => {
+  if (event.pointerId !== holdPointerId) return;
+  clearTimeout(holdTimer); holdTimer = undefined; holdPointerId = undefined; holdButton = undefined;
+};
+$('#tracks').addEventListener('pointerup', cancelStepHold);
+$('#tracks').addEventListener('pointercancel', cancelStepHold);
+$('#tracks').addEventListener('contextmenu', event => {
+  if (mobileDevice && (event.target as HTMLElement).closest('.step')) event.preventDefault();
+});
 $('#tracks').addEventListener('click', event => {
   const button = (event.target as HTMLElement).closest<HTMLButtonElement>('button'); if (!button) return;
+  if (button.matches('.step') && longPressedSteps.has(button)) {
+    longPressedSteps.delete(button); delete button.dataset.longPressed; event.preventDefault(); return;
+  }
   const id = button.dataset.track as TrackId;
   if (button.dataset.step !== undefined) { store.toggle(id, Number(button.dataset.step), (event as MouseEvent).shiftKey); markCustom(); }
   if (button.dataset.action) { const key = button.dataset.action as 'mute' | 'solo'; store.pattern.tracks[id][key] = !store.pattern.tracks[id][key]; store.change(); markCustom(); }
